@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Test API";
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#registration-form").submit(function (event) {
+                event.preventDefault();
+
+                var formData = {
+                    username: $("#username").val(),
+                    password: $("#password").val()
+                };
+
+                $.ajax({
+                    url: "/api/",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error: " + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<form id="registration-form">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username"><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br>
+
+    <button type="submit" id="register-button">Register</button>
+</form>
