@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿
+using Microsoft.EntityFrameworkCore;
 
 namespace QuizPop.DAL
 {
