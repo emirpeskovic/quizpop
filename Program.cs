@@ -1,9 +1,11 @@
+using QuizPop.DAL;
 using QuizPop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddSingleton<QuizService>();
 
 var app = builder.Build();
