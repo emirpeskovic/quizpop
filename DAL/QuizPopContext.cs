@@ -7,6 +7,7 @@ namespace QuizPop.DAL
 {
     public class QuizPopContext : DbContext
     {
+        public QuizPopContext(DbContextOptions<QuizPopContext> options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,11 +22,11 @@ namespace QuizPop.DAL
                 entityMethod.MakeGenericMethod(entityType).Invoke(modelBuilder, null);
             }
 
-            foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 entityType.SetTableName(entityType.DisplayName().ToSnakeCase());
 
-                foreach (IMutableProperty property in entityType.GetProperties())
+                foreach (var property in entityType.GetProperties())
                 {
                     property.SetColumnName(property.Name.ToSnakeCase());
                 }
@@ -46,10 +47,8 @@ namespace QuizPop.DAL
             return base.Set<T>();
         }
 
-        private static IEnumerable<Type> GetEntityTypes()
-        {
-            return Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t => typeof(IEntity).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract);
-        }
+        private static IEnumerable<Type> GetEntityTypes() => 
+            Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => typeof(IEntity).IsAssignableFrom(t) && t is { IsClass: true, IsAbstract: false });
     }
 }
