@@ -26,6 +26,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "api",
     pattern: "api/{controller}/{action}/{id?}",
+    // ReSharper disable once Mvc.ControllerNotResolved
     constraints: new { controller = "^API.*" });
 
 app.MapControllerRoute(
