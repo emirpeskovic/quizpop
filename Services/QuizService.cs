@@ -20,5 +20,7 @@ namespace QuizPop.Services
                 context.SaveChanges();
             });
         }
+
+        public Quiz? GetQuiz(Func<Quiz, bool> match) => _databaseManager.GetEntity(match);
     }
 }

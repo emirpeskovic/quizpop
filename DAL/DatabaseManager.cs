@@ -20,7 +20,14 @@ namespace QuizPop.DAL
 
         public void UseContext(Action<DbContext> action)
         {
-            action.Invoke(CreateContext());
+            using var context = CreateContext();
+            action.Invoke(context);
+        }
+
+        public T? GetEntity<T>(Func<T, bool> match) where T : class, IEntity
+        {
+            using var context = (QuizPopContext)CreateContext();
+            return context.Entity<T>().FirstOrDefault(match);
         }
     }
 }

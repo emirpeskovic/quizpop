@@ -42,10 +42,7 @@ namespace QuizPop.DAL
                 });
         }
 
-        public DbSet<T> Entity<T>() where T : class, IEntity
-        {
-            return base.Set<T>();
-        }
+        public DbSet<T> Entity<T>() where T : class, IEntity => base.Set<T>();
 
         private static IEnumerable<Type> GetEntityTypes() => 
             Assembly.GetExecutingAssembly().GetTypes()
