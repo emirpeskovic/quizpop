@@ -32,15 +32,6 @@ namespace QuizPop.DAL
             }
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql("YourConnectionStringHere",
-                npgsqlOptionsAction: options =>
-                {
-                    options.SetPostgresVersion(new Version(13, 4));
-                });
-        }
-
         public DbSet<T> Entity<T>() where T : class, IEntity => base.Set<T>();
 
         private static IEnumerable<Type> GetEntityTypes() => 
