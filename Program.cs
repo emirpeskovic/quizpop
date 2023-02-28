@@ -1,4 +1,6 @@
+#if DEBUG
 using QuizPop;
+#endif
 using QuizPop.DAL;
 using QuizPop.Services;
 
@@ -10,7 +12,9 @@ builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddSingleton<QuizService>();
 
 var app = builder.Build();
-await Initializer.Initialize(app);
+#if DEBUG
+Initializer.Initialize(app);
+#endif
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

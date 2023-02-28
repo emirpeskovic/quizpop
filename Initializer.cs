@@ -1,15 +1,17 @@
-﻿using QuizPop.DAL;
+﻿using System.Diagnostics;
+using QuizPop.DAL;
 
 namespace QuizPop;
 
 public static class Initializer
 {
-    public static async Task Initialize(WebApplication webApp)
+    [Conditional("DEBUG")]
+    public static void Initialize(WebApplication webApp)
     {
         using var scope = webApp.Services.CreateScope();
         var services = scope.ServiceProvider;
         var databaseManager = services.GetRequiredService<DatabaseManager>();
-        await databaseManager.UseContextAsync(context =>
+        databaseManager.UseContext(context =>
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
