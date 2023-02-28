@@ -18,6 +18,8 @@ public class QuizController : Controller
     {
         return View(new QuizViewModel
         {
+            // For some reason, quiz is not null when it should be.
+            // This solves the problem, checking if the Id is 0.
             Quiz = quiz?.Id == 0 ? null : quiz ?? null,
             Quizzes = quiz == null ? _quizService.GetQuizzes(page, count) : null
         });
