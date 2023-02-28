@@ -28,13 +28,13 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "api",
-    pattern: "api/{controller}/{action}/{id?}",
+    "api",
+    "api/{controller}/{action}/{id?}",
     // ReSharper disable once Mvc.ControllerNotResolved
     constraints: new { controller = "^API.*" });
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
