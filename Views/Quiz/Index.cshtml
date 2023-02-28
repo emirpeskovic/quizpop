@@ -3,6 +3,32 @@
     ViewData["Title"] = "Quiz";
 }
 
-<div class="text-center">
-    @(Model.Quizzes?.Count() ?? 0)
-</div>
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+@if (Model.Quiz != null)
+{
+    <h1 class="text-center">Single</h1>
+    <div class="text-center">
+        @(Model.Quiz.Title)
+    </div>
+}
+else if (Model.Quizzes != null && Model.Quizzes.Any())
+{
+    <h1 class="text-center">Multiple</h1>
+    <div class="text-center">
+        @foreach (var quiz in Model.Quizzes)
+        {
+            <div>
+                <a href="@Url.Action("Index", "Quiz", quiz)">
+                    @(quiz.Title)
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="text-center">
+        No quizzes found.
+    </div>
+}

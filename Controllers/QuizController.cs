@@ -18,7 +18,7 @@ public class QuizController : Controller
     {
         return View(new QuizViewModel
         {
-            Quiz = quiz,
+            Quiz = quiz?.Id == 0 ? null : quiz ?? null,
             Quizzes = quiz == null ? _quizService.GetQuizzes(page, count) : null
         });
     }
