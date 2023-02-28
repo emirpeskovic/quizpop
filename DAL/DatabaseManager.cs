@@ -8,7 +8,7 @@ namespace QuizPop.DAL
         
         public DatabaseManager()
         {
-            _connectionString = "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=quizpop;Pooling=true;Min Pool Size=0;Max Pool Size=100;Connection Lifetime=0;";
+            _connectionString = "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=quizpop;Pooling=true;";
         }
 
         private DbContext CreateContext()

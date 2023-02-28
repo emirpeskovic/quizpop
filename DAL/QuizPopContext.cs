@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using QuizPop.Extensions;
 using System.Reflection;
 
@@ -13,7 +12,7 @@ namespace QuizPop.DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            var entityMethod = typeof(ModelBuilder).GetMethod("Entity");
+            var entityMethod = typeof(ModelBuilder).GetMethods().FirstOrDefault(m => m is { Name: "Entity", IsGenericMethod: true } && m.GetParameters().Length == 0);
             if (entityMethod == null) return;
 
             foreach (var entityType in GetEntityTypes())
