@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuizPop.DAL
+namespace QuizPop.DAL;
+
+public interface IEntity
 {
-    public interface IEntity
-    {
-        [Key]
-        public int Id { get; init; }
-    }
+    [Key] public int Id { get; init; }
 }

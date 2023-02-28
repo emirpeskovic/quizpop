@@ -1,14 +1,10 @@
-﻿using QuizPop.DAL;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel.DataAnnotations;
+using QuizPop.DAL;
 
-namespace QuizPop.Models
+namespace QuizPop.Models;
+
+public class Quiz : IEntity
 {
-    public class Quiz : IEntity
-    {
-        [Key] public int Id { get; init; }
-
-        [Required] public string Title { get; init; }
-        
-    }
+    [Required] public string Title { get; init; }
+    [Key] public int Id { get; init; }
 }
