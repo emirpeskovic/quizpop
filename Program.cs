@@ -1,3 +1,4 @@
+using QuizPop;
 using QuizPop.DAL;
 using QuizPop.Services;
 
@@ -9,6 +10,7 @@ builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddSingleton<QuizService>();
 
 var app = builder.Build();
+Initializer.Initialize(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
