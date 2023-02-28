@@ -1,4 +1,19 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function mapPartialView(className, url, method, fields) {
+    $('.' + className).click(function (e) {
+        e.preventDefault();
 
-// Write your JavaScript code.
+        const data = {};
+        for (let i = 0; i < fields.length; i++) {
+            data[fields[i]] = $(this).data(fields[i]);
+        }
+        
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            success: function (result) {
+                $("main").html(result);
+            }
+        });
+    })
+}

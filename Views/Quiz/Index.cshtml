@@ -3,6 +3,12 @@
     ViewData["Title"] = "Quiz";
 }
 
+@section Scripts {
+    <script>
+        mapPartialView("quiz-link", "/quiz/getQuiz", "get", ["quiz-id"]);
+    </script>
+}
+
 <h1 class="text-center">@ViewData["Title"]</h1>
 
 @if (Model.Quiz != null)
@@ -19,7 +25,7 @@ else if (Model.Quizzes != null && Model.Quizzes.Any())
         @foreach (var quiz in Model.Quizzes)
         {
             <div>
-                <a href="@Url.Action("Index", "Quiz", quiz)">
+                <a href="#" data-quiz-id="@quiz.Id" class="quiz-link">
                     @(quiz.Title)
                 </a>
             </div>

@@ -16,12 +16,30 @@ public class QuizController : Controller
 
     public IActionResult Index(Quiz? quiz = null, int page = 0, int count = 12)
     {
+        if (quiz != null && quiz.Id != 0)
+            return PartialView(new QuizViewModel
+            {
+                Quiz = quiz,
+                Quizzes = null
+            });
+
         return View(new QuizViewModel
         {
             // For some reason, quiz is not null when it should be.
             // This solves the problem, checking if the Id is 0.
-            Quiz = quiz?.Id == 0 ? null : quiz ?? null,
-            Quizzes = quiz == null ? _quizService.GetQuizzes(page, count) : null
+            Quiz = quiz?.Id == 0 || quiz == null ? null : quiz,
+            Quizzes = quiz?.Id == 0 || quiz == null ? _quizService.GetQuizzes(page, count) : null
+        });
+    }
+
+    [HttpGet("quiz/getQuiz")]
+    public IActionResult GetQuiz([FromQuery(Name = "quiz-id")] int quizId)
+    {
+        var quiz = _quizService.GetQuiz(q => q.Id == quizId);
+        return PartialView("Index", new QuizViewModel
+        {
+            Quiz = quiz,
+            Quizzes = null
         });
     }
 }
