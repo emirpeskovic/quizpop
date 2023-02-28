@@ -17,7 +17,6 @@ namespace QuizPop.Services
             _databaseManager.UseContext(context =>
             {
                 context.Add(quiz);
-                context.SaveChanges();
             });
         }
 

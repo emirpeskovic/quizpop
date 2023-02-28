@@ -10,7 +10,7 @@ builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddSingleton<QuizService>();
 
 var app = builder.Build();
-Initializer.Initialize(app);
+await Initializer.Initialize(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

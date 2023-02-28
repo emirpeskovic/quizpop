@@ -6,7 +6,9 @@ namespace QuizPop.DAL
 {
     public class QuizPopContext : DbContext
     {
-        public QuizPopContext(DbContextOptions<QuizPopContext> options) : base(options) {}
+        public QuizPopContext(DbContextOptions<QuizPopContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,7 +35,7 @@ namespace QuizPop.DAL
 
         public DbSet<T> Entity<T>() where T : class, IEntity => base.Set<T>();
 
-        private static IEnumerable<Type> GetEntityTypes() => 
+        private static IEnumerable<Type> GetEntityTypes() =>
             Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => typeof(IEntity).IsAssignableFrom(t) && t is { IsClass: true, IsAbstract: false });
     }

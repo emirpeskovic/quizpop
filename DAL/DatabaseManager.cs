@@ -22,6 +22,16 @@ namespace QuizPop.DAL
         {
             using var context = CreateContext();
             action.Invoke(context);
+            
+            context.SaveChanges();
+        }
+        
+        public async Task UseContextAsync(Action<DbContext> action)
+        {
+            await using var context = CreateContext();
+            action.Invoke(context);
+            
+            await context.SaveChangesAsync();
         }
 
         public T? GetEntity<T>(Func<T, bool> match) where T : class, IEntity
