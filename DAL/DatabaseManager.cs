@@ -74,7 +74,20 @@ public class DatabaseManager
     /// <returns>The entity</returns>
     public T? GetOne<T>(Func<T, bool>? match = null) where T : class, IEntity
     {
-        using var context = (QuizPopContext)CreateContext();
+        var context = (QuizPopContext)CreateContext();
         return context.Entity<T>().FirstOrDefault(match ?? (_ => true));
+    }
+
+    /// <summary>
+    ///     Returns an IEnumerable of entities from the database.
+    /// </summary>
+    /// <param name="page">How many entities to skip * count</param>
+    /// <param name="count">The amount of entities to take</param>
+    /// <typeparam name="T">The entity type</typeparam>
+    /// <returns>An IEnumerable of entity</returns>
+    public IEnumerable<T> GetMany<T>(int page, int count) where T : class, IEntity
+    {
+        var context = (QuizPopContext)CreateContext();
+        return context.Entity<T>().Skip(page * count).Take(count);
     }
 }

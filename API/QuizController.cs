@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using QuizPop.Models;
+using QuizPop.Models.Entity;
 using QuizPop.Services;
 
 namespace QuizPop.API;
@@ -17,14 +17,12 @@ public class QuizController : ControllerBase
     }
 
     [HttpGet]
-    [Route("GetQuiz")]
     public IActionResult GetQuiz()
     {
         return Ok(JsonConvert.SerializeObject(_quizService.GetQuiz() ?? new Quiz()));
     }
 
     [HttpPost]
-    [Route("CreateQuiz")]
     public IActionResult CreateQuiz([FromBody] Quiz quiz)
     {
         return Ok(JsonConvert.SerializeObject(_quizService.CreateQuiz(quiz)));

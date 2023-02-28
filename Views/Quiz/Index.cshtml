@@ -1,0 +1,8 @@
+﻿@model QuizPop.Models.View.QuizViewModel
+@{
+    ViewData["Title"] = "Quiz";
+}
+
+<div class="text-center">
+    @(Model.Quizzes?.Count() ?? 0)
+</div>

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using QuizPop.DAL;
 
-namespace QuizPop.Models;
+namespace QuizPop.Models.Entity;
 
 public class Quiz : IEntity
 {

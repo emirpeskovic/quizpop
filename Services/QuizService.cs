@@ -1,5 +1,5 @@
 ﻿using QuizPop.DAL;
-using QuizPop.Models;
+using QuizPop.Models.Entity;
 
 namespace QuizPop.Services;
 
@@ -22,5 +22,10 @@ public class QuizService
     public Quiz? GetQuiz(Func<Quiz, bool>? match = null)
     {
         return _databaseManager.GetOne(match);
+    }
+
+    public IEnumerable<Quiz> GetQuizzes(int page = 0, int count = 12)
+    {
+        return _databaseManager.GetMany<Quiz>(page, count);
     }
 }
