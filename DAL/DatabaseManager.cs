@@ -39,7 +39,7 @@ namespace QuizPop.DAL
                 action.Invoke(context);
                 context.SaveChanges();
             }
-            catch (DbException dex)
+            catch (DbException)
             {
                 if (context.Database.CurrentTransaction != null)
                     context.Database.RollbackTransaction();
@@ -59,7 +59,7 @@ namespace QuizPop.DAL
                 action.Invoke(context);
                 await context.SaveChangesAsync();
             }
-            catch (DbException dex)
+            catch (DbException)
             {
                 if (context.Database.CurrentTransaction != null)
                     await context.Database.RollbackTransactionAsync();
@@ -72,7 +72,7 @@ namespace QuizPop.DAL
         /// <param name="match">If defined, tries to find an entity with the matched predicate.</param>
         /// <typeparam name="T">The entity that implements IEntity</typeparam>
         /// <returns>The entity</returns>
-        public T? GetOne<T>(Func<T, bool>? match) where T : class, IEntity
+        public T? GetOne<T>(Func<T, bool>? match = null) where T : class, IEntity
         {
             using var context = (QuizPopContext)CreateContext();
             return context.Entity<T>().FirstOrDefault(match ?? (_ => true));

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using QuizPop.Models;
 using QuizPop.Services;
 
 namespace QuizPop.API
@@ -17,9 +19,6 @@ namespace QuizPop.API
 
         [HttpGet]
         [Route("GetQuiz")]
-        public IActionResult GetQuiz()
-        {
-            return Ok("Hello World");
-        }
+        public IActionResult GetQuiz() => Ok(JsonConvert.SerializeObject(_quizService.GetQuiz() ?? new Quiz()));
     }
 }
