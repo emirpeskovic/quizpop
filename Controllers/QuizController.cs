@@ -16,12 +16,10 @@ public class QuizController : Controller
 
     public IActionResult Index(Quiz? quiz = null, int page = 0, int count = 12)
     {
-        var quizzes = _quizService.GetQuizzes(page, count);
-        
         return View(new QuizViewModel
         {
             Quiz = quiz,
-            Quizzes = quizzes
+            Quizzes = quiz == null ? _quizService.GetQuizzes(page, count) : null
         });
     }
 }
