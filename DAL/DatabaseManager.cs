@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace QuizPop.DAL
 {
     public class DatabaseManager
     {
+        /// <summary>
+        /// Our connection string.
+        /// </summary>
         private readonly string _connectionString;
         
         public DatabaseManager()
@@ -11,6 +15,10 @@ namespace QuizPop.DAL
             _connectionString = "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=quizpop;Pooling=true;";
         }
 
+        /// <summary>
+        /// Creates a new context for the database.
+        /// </summary>
+        /// <returns>QuizPopContext as DbContext</returns>
         private DbContext CreateContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<QuizPopContext>()
@@ -18,26 +26,56 @@ namespace QuizPop.DAL
             return new QuizPopContext(optionsBuilder.Options);
         }
 
+        /// <summary>
+        /// Uses the context to perform an action.
+        /// Will rollback changes if an exception is thrown.
+        /// </summary>
+        /// <param name="action">User-defined action</param>
         public void UseContext(Action<DbContext> action)
         {
             using var context = CreateContext();
-            action.Invoke(context);
-            
-            context.SaveChanges();
+            try
+            {
+                action.Invoke(context);
+                context.SaveChanges();
+            }
+            catch (DbException dex)
+            {
+                if (context.Database.CurrentTransaction != null)
+                    context.Database.RollbackTransaction();
+            }
         }
         
+        /// <summary>
+        /// Uses the context asynchronously to perform an action.
+        /// Will rollback changes if an exception is thrown.
+        /// </summary>
+        /// <param name="action">User-defined action</param>
         public async Task UseContextAsync(Action<DbContext> action)
         {
             await using var context = CreateContext();
-            action.Invoke(context);
-            
-            await context.SaveChangesAsync();
+            try
+            {
+                action.Invoke(context);
+                await context.SaveChangesAsync();
+            }
+            catch (DbException dex)
+            {
+                if (context.Database.CurrentTransaction != null)
+                    await context.Database.RollbackTransactionAsync();
+            }
         }
 
-        public T? GetEntity<T>(Func<T, bool> match) where T : class, IEntity
+        /// <summary>
+        /// Returns a single entity from the database.
+        /// </summary>
+        /// <param name="match">If defined, tries to find an entity with the matched predicate.</param>
+        /// <typeparam name="T">The entity that implements IEntity</typeparam>
+        /// <returns>The entity</returns>
+        public T? GetOne<T>(Func<T, bool>? match) where T : class, IEntity
         {
             using var context = (QuizPopContext)CreateContext();
-            return context.Entity<T>().FirstOrDefault(match);
+            return context.Entity<T>().FirstOrDefault(match ?? (_ => true));
         }
     }
 }
