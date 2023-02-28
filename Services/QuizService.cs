@@ -20,6 +20,6 @@ namespace QuizPop.Services
             });
         }
 
-        public Quiz? GetQuiz(Func<Quiz, bool> match) => _databaseManager.GetOne(match);
+        public Quiz? GetQuiz(Func<Quiz, bool>? match) => _databaseManager.GetOne(match);
     }
 }
