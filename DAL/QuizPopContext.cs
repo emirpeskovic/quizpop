@@ -18,7 +18,6 @@ namespace QuizPop.DAL
 
             foreach (var entityType in GetEntityTypes())
             {
-                Console.WriteLine("YO");
                 entityMethod.MakeGenericMethod(entityType).Invoke(modelBuilder, null);
             }
 
