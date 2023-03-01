@@ -1,8 +1,9 @@
-#if DEBUG
 using QuizPop;
-#endif
 using QuizPop.DAL;
 using QuizPop.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using QuizPop.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddSingleton<QuizService>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = true,
+        ValidAudience = "quizpop.com",
+        ValidateIssuer = true,
+        ValidIssuer = "quizpop.com",
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(JWT.JWT_TOKEN))
+    };
+});
 
 var app = builder.Build();
 #if DEBUG
@@ -30,6 +44,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
+app.UseStaticFiles();
 
 app.MapControllerRoute(
     "api",
