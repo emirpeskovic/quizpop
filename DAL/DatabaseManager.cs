@@ -21,9 +21,17 @@ public class DatabaseManager
     /// <returns>QuizPopContext as DbContext</returns>
     private DbContext CreateContext()
     {
-        var optionsBuilder = new DbContextOptionsBuilder<QuizPopContext>()
-            .UseNpgsql(_connectionString);
-        return new QuizPopContext(optionsBuilder.Options);
+        try
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<QuizPopContext>()
+                .UseNpgsql(_connectionString);
+            return new QuizPopContext(optionsBuilder.Options);
+        }
+        catch (DbException e)
+        {
+            Console.WriteLine("Could not connect to database: " + e.Message);
+            throw;
+        }
     }
 
     /// <summary>
