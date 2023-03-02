@@ -6,10 +6,19 @@ namespace QuizPop.DAL;
 
 public class QuizPopContext : DbContext
 {
+    /// <summary>
+    /// Our constructor that takes in a DbContextOptions object.
+    /// </summary>
+    /// <param name="options">DbContextOptions for QuizPopContext</param>
     public QuizPopContext(DbContextOptions<QuizPopContext> options) : base(options)
     {
     }
 
+    /// <summary>
+    ///    Our custom configuration for the database.
+    ///    Should not be called directly.
+    /// </summary>
+    /// <param name="modelBuilder">The ModelBuilder object</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Call the base method to ensure that the default configuration is applied.
@@ -47,6 +56,7 @@ public class QuizPopContext : DbContext
     /// <returns>An IEnumerable of Type</returns>
     private static IEnumerable<Type> GetEntityTypes()
     {
+        // Return all classes in the executing assembly that implement the IEntity interface.
         return Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => typeof(IEntity).IsAssignableFrom(t) && t is { IsClass: true, IsAbstract: false });
     }
