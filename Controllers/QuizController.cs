@@ -16,6 +16,8 @@ public class QuizController : Controller
 
     public IActionResult Index(Quiz? quiz = null, int page = 0, int count = 12)
     {
+        // For some reason, quiz is not null when it should be.
+        // This solves the problem, checking if the Id is 0.
         if (quiz != null && quiz.Id != 0)
             return PartialView(new QuizViewModel
             {
@@ -25,9 +27,7 @@ public class QuizController : Controller
 
         return View(new QuizViewModel
         {
-            // For some reason, quiz is not null when it should be.
-            // This solves the problem, checking if the Id is 0.
-            Quiz = quiz?.Id == 0 || quiz == null ? null : quiz,
+            Quiz = null,
             Quizzes = quiz?.Id == 0 || quiz == null ? _quizService.GetQuizzes(page, count) : null
         });
     }
