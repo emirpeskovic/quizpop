@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Read configuration from appsettings.json
+builder.Configuration.AddJsonFile("appsettings.json", false, true);
+
 // Our singletons
 builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddSingleton<QuizService>();
