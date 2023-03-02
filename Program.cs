@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Antiforgery;
 using QuizPop;
 using QuizPop.DAL;
 using QuizPop.Services;
@@ -9,8 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Our singletons
 builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddSingleton<QuizService>();
+
+// Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -23,6 +28,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(JwtConstants.JwtToken))
     };
+});
+
+// Anti-forgery
+builder.Services.AddAntiforgery(options =>
+{
+    // Options to help protect against XSS attacks
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 var app = builder.Build();
@@ -46,6 +60,17 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 app.UseStaticFiles();
+
+// Enable Anti-Forgery middleware
+app.Use(next => context =>
+{
+    // Validate Anti-Forgery token
+    var tokens = context.RequestServices.GetRequiredService<IAntiforgery>();
+    var isRequestValid = tokens.IsRequestValidAsync(context).GetAwaiter().GetResult();
+    if (isRequestValid) return next(context);
+    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+    return Task.CompletedTask;
+});
 
 app.MapControllerRoute(
     "api",
