@@ -64,6 +64,10 @@ app.UseStaticFiles();
 // Enable Anti-Forgery middleware
 app.Use(next => context =>
 {
+#if DEBUG
+    if (context.Connection.RemoteIpAddress?.ToString() == "127.0.0.1") return next(context);
+#endif
+
     // Validate Anti-Forgery token
     var tokens = context.RequestServices.GetRequiredService<IAntiforgery>();
     var isRequestValid = tokens.IsRequestValidAsync(context).GetAwaiter().GetResult();

@@ -17,6 +17,17 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="5.0.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" PrivateAssets="All" />
+        <PackageReference Include="tailwindcss.msbuild" Version="0.0.3" />
     </ItemGroup>
 
+    <Target Name="PostCss" AfterTargets="Build">
+        <Exec Command="npm run postcss" />
+    </Target>
+    
+    <Target Name="WatchCSS" AfterTargets="Build" Condition="'$(Configuration)'=='Debug'">
+        <Exec Command="npm run watch" />
+    </Target>
 </Project>
