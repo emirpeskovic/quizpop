@@ -5,6 +5,8 @@ using QuizPop.Tools;
 
 namespace QuizPop.API;
 
+[Route("api/[controller]")]
+[ApiController]
 public class AuthController : ControllerBase
 {
     private readonly UserService _userService;
@@ -14,7 +16,7 @@ public class AuthController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPost]
+    [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest loginRequest)
     {
         var user = _userService.GetUser(loginRequest);

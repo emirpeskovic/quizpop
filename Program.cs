@@ -18,6 +18,8 @@ builder.Configuration.AddJsonFile("appsettings.json", false, true);
 // Our singletons
 builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddSingleton<QuizService>();
+builder.Services.AddSingleton<UserService>();
+// TODO: Make services an interface and use reflection to add them to the container?
 
 // Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

@@ -46,13 +46,19 @@ public class UserService
         var salt = new byte[16];
 
         // We use 10,000 iterations for the hashing
-        const int iterations = 10000;
+#if DEBUG
+        const int iterations = 1_000;
+#else
+        const int iterations = 10_000;
+#endif
 
         // We use the Argon2id hashing algorithm
         var argon2 = new Argon2id(Encoding.UTF8.GetBytes(loginRequest.Password))
         {
             Salt = salt,
-            Iterations = iterations
+            Iterations = iterations,
+            MemorySize = 1024,
+            DegreeOfParallelism = 4
         };
 
         // We return the user if it exists and the values match
