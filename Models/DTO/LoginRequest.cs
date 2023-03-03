@@ -2,6 +2,9 @@
 
 namespace QuizPop.Models.DTO;
 
+/// <summary>
+///     Login request data transfer object
+/// </summary>
 public class LoginRequest
 {
     [Required]

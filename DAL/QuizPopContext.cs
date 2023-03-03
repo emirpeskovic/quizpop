@@ -1,9 +1,13 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using QuizPop.DAL.Common;
 using QuizPop.Extensions;
 
 namespace QuizPop.DAL;
 
+/// <summary>
+///     Our DbContext class that will be used to access the database.
+/// </summary>
 public class QuizPopContext : DbContext
 {
     /// <summary>

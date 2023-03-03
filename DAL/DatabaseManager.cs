@@ -1,8 +1,14 @@
 ﻿using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using QuizPop.DAL.Common;
 
 namespace QuizPop.DAL;
 
+/// <summary>
+///     The DatabaseManager class.
+///     This class is used to create a context to the database.
+///     It also provides a method to perform actions on the database.
+/// </summary>
 public class DatabaseManager
 {
     /// <summary>

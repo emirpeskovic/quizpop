@@ -1,17 +1,15 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using QuizPop.DAL;
+using QuizPop.DAL.Common;
 
 namespace QuizPop.Models.Entity;
 
-public class User : IEntity
+/// <summary>
+///     Our User entity.
+/// </summary>
+public class User : BaseEntity
 {
-    /// <summary>
-    ///     The ID of the user.
-    /// </summary>
-    [Key]
-    public int Id { get; init; }
-    
     /// <summary>
     ///     The email of the user.
     /// </summary>

@@ -1,10 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using QuizPop.DAL;
+using QuizPop.DAL.Common;
 
 namespace QuizPop.Models.Entity;
 
-public class Quiz : IEntity
+/// <summary>
+///     Our quiz entity
+/// </summary>
+public class Quiz : BaseEntity
 {
-    [Key] public int Id { get; init; }
-    [Required] public string Title { get; init; }
+    /// <summary>
+    ///     The title of the quiz
+    /// </summary>
+    [Required]
+    public string Title { get; init; }
 }
