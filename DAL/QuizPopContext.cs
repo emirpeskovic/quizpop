@@ -11,7 +11,7 @@ namespace QuizPop.DAL;
 public class QuizPopContext : DbContext
 {
     /// <summary>
-    /// Our constructor that takes in a DbContextOptions object.
+    ///     Our constructor that takes in a DbContextOptions object.
     /// </summary>
     /// <param name="options">DbContextOptions for QuizPopContext</param>
     public QuizPopContext(DbContextOptions<QuizPopContext> options) : base(options)
@@ -19,8 +19,8 @@ public class QuizPopContext : DbContext
     }
 
     /// <summary>
-    ///    Our custom configuration for the database.
-    ///    Should not be called directly.
+    ///     Our custom configuration for the database.
+    ///     Should not be called directly.
     /// </summary>
     /// <param name="modelBuilder">The ModelBuilder object</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)

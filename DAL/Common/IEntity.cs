@@ -8,7 +8,8 @@ namespace QuizPop.DAL.Common;
 public interface IEntity
 {
     /// <summary>
-    ///    The primary key of the entity.
+    ///     The primary key of the entity.
     /// </summary>
-    [Key] public int Id { get; init; }
+    [Key]
+    public int Id { get; init; }
 }

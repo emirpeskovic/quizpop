@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using QuizPop.DAL;
 using QuizPop.DAL.Common;
 
 namespace QuizPop.Models.Entity;

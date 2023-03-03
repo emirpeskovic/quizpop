@@ -17,7 +17,7 @@ public class DatabaseManager
     private readonly string _connectionString;
 
     /// <summary>
-    ///    Our logger.
+    ///     Our logger.
     /// </summary>
     private readonly ILogger<DatabaseManager> _logger;
 

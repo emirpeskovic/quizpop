@@ -1,10 +1,11 @@
+using System.Text;
 using Microsoft.AspNetCore.Antiforgery;
-using QuizPop;
-using QuizPop.DAL;
-using QuizPop.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using QuizPop;
 using QuizPop.Constants;
+using QuizPop.DAL;
+using QuizPop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +30,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidIssuer = "quizpop.com",
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(JwtConstants.JwtToken))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConstants.JwtToken))
     };
 });
 
